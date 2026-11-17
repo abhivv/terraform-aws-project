@@ -1,0 +1,29 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo "Installing Terraform..."
+      - TERRAFORM_VERSION="1.10.5"
+      - curl -o terraform.zip https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+      - unzip terraform.zip
+      - mv terraform /usr/local/bin/
+      - terraform --version
+
+  pre_build:
+    commands:
+      - echo "Checking Terraform formatting..."
+      - terraform fmt -check -recursive
+      - echo "Initializing Terraform..."
+      - terraform init -input=false
+      - echo "Validating Terraform configuration..."
+      - terraform validate
+
+  build:
+    commands:
+      - echo "Generating Terraform execution plan..."
+      - terraform plan -input=false -var="allowed_ssh_cidr=127.0.0.1/32" -out=tfplan
+
+  post_build:
+    commands:
+      - echo "Terraform validation and plan completed."
