@@ -67,27 +67,30 @@ resource "aws_iam_role_policy" "codebuild" {
         Resource = "arn:aws:dynamodb:${var.aws_region}:${var.aws_account_id}:table/terraform-state-locks"
       },
 
-      # EC2 read permissions required by Terraform refresh
+      # EC2 read permissions
       {
         Effect = "Allow"
         Action = [
+          "ec2:DescribeInstances",
           "ec2:DescribeKeyPairs",
           "ec2:DescribeVpcs",
           "ec2:DescribeVpcAttribute",
           "ec2:DescribeSubnets",
           "ec2:DescribeInternetGateways",
-          "ec2:DescribeSecurityGroups"
+          "ec2:DescribeSecurityGroups",
+          "ec2:DescribeRouteTables"
         ]
         Resource = "*"
       },
 
-      # IAM read permissions required by Terraform refresh
+      # IAM read permissions
       {
         Effect = "Allow"
         Action = [
           "iam:GetRole",
           "iam:ListRolePolicies",
-          "iam:GetRolePolicy"
+          "iam:GetRolePolicy",
+          "iam:ListAttachedRolePolicies"
         ]
         Resource = "arn:aws:iam::${var.aws_account_id}:role/${var.project_name}-codebuild-role"
       },
