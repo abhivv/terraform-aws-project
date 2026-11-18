@@ -23,3 +23,8 @@ variable "public_key" {
   description = "SSH public key for EC2 access"
   type        = string
 }
+
+variable "aws_region" {
+  description = "AWS deployment region"
+  type        = string
+}

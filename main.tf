@@ -55,6 +55,7 @@ module "codebuild" {
   public_key            = var.public_key
   github_repository_url = "https://github.com/abhivv/terraform-aws-project.git"
   allowed_ssh_cidr      = var.allowed_ssh_cidr
+  aws_region            = var.aws_region
   depends_on = [
     aws_iam_role_policy.codebuild_connection
   ]

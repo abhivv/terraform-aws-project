@@ -26,4 +26,4 @@ phases:
 
   post_build:
     commands:
-      - echo "Terraform validation and plan completed."
+      - echo "Terraform validation and plan completed successfully."

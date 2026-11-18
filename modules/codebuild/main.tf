@@ -22,6 +22,12 @@ resource "aws_codebuild_project" "main" {
     }
 
     environment_variable {
+      name  = "TF_VAR_aws_region"
+      value = var.aws_region
+      type  = "PLAINTEXT"
+    }
+
+    environment_variable {
       name  = "TF_VAR_allowed_ssh_cidr"
       value = var.allowed_ssh_cidr
       type  = "PLAINTEXT"
