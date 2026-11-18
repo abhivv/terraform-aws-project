@@ -28,6 +28,7 @@ resource "aws_iam_role_policy" "codebuild" {
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
+      # CloudWatch Logs
       {
         Effect = "Allow"
         Action = [
@@ -37,19 +38,24 @@ resource "aws_iam_role_policy" "codebuild" {
         ]
         Resource = "*"
       },
+
+      # Terraform remote state in S3
       {
         Effect = "Allow"
         Action = [
           "s3:GetObject",
           "s3:PutObject",
           "s3:DeleteObject",
-          "s3:ListBucket"
+          "s3:ListBucket",
+          "s3:GetBucketLocation"
         ]
         Resource = [
           "arn:aws:s3:::abhi-d2-terraform-state-089603615347",
           "arn:aws:s3:::abhi-d2-terraform-state-089603615347/*"
         ]
       },
+
+      # Terraform state locking in DynamoDB
       {
         Effect = "Allow"
         Action = [
@@ -59,6 +65,45 @@ resource "aws_iam_role_policy" "codebuild" {
           "dynamodb:DescribeTable"
         ]
         Resource = "arn:aws:dynamodb:${var.aws_region}:${var.aws_account_id}:table/terraform-state-locks"
+      },
+
+      # EC2 read permissions required by Terraform refresh
+      {
+        Effect = "Allow"
+        Action = [
+          "ec2:DescribeKeyPairs",
+          "ec2:DescribeVpcs"
+        ]
+        Resource = "*"
+      },
+
+      # IAM read permissions required by Terraform refresh
+      {
+        Effect = "Allow"
+        Action = [
+          "iam:GetRole"
+        ]
+        Resource = "arn:aws:iam::${var.aws_account_id}:role/${var.project_name}-codebuild-role"
+      },
+
+      # S3 application bucket configuration reads
+      {
+        Effect = "Allow"
+        Action = [
+          "s3:GetBucketVersioning",
+          "s3:GetEncryptionConfiguration",
+          "s3:GetBucketPublicAccessBlock"
+        ]
+        Resource = "arn:aws:s3:::${var.project_name}-app-${var.aws_account_id}"
+      },
+
+      # CodeConnections read permission
+      {
+        Effect = "Allow"
+        Action = [
+          "codeconnections:ListTagsForResource"
+        ]
+        Resource = "arn:aws:codestar-connections:${var.aws_region}:${var.aws_account_id}:connection/7548af9c-61d8-4078-bbbe-e029a5cee6f4"
       }
     ]
   })
