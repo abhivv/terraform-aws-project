@@ -20,6 +20,12 @@ resource "aws_codebuild_project" "main" {
       value = var.public_key
       type  = "PLAINTEXT"
     }
+
+    environment_variable {
+      name  = "TF_VAR_allowed_ssh_cidr"
+      value = var.allowed_ssh_cidr
+      type  = "PLAINTEXT"
+    }
   }
 
   source {
