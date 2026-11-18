@@ -75,6 +75,7 @@ resource "aws_iam_role_policy" "codebuild" {
           "ec2:DescribeInstances",
           "ec2:DescribeInstanceTypes",
           "ec2:DescribeTags",
+          "ec2:DescribeInstanceAttribute",
           "ec2:DescribeKeyPairs",
           "ec2:DescribeVpcs",
           "ec2:DescribeVpcAttribute",
@@ -98,10 +99,13 @@ resource "aws_iam_role_policy" "codebuild" {
         Resource = "arn:aws:iam::${var.aws_account_id}:role/${var.project_name}-codebuild-role"
       },
 
-      # S3 application bucket configuration reads
+      # S3 application bucket read permissions
       {
         Effect = "Allow"
         Action = [
+          "s3:ListBucket",
+          "s3:GetBucketLocation",
+          "s3:GetBucketTagging",
           "s3:GetBucketVersioning",
           "s3:GetEncryptionConfiguration",
           "s3:GetBucketPublicAccessBlock"
