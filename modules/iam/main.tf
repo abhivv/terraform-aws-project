@@ -74,6 +74,7 @@ resource "aws_iam_role_policy" "codebuild" {
         Action = [
           "ec2:DescribeInstances",
           "ec2:DescribeInstanceTypes",
+          "ec2:DescribeTags",
           "ec2:DescribeKeyPairs",
           "ec2:DescribeVpcs",
           "ec2:DescribeVpcAttribute",
