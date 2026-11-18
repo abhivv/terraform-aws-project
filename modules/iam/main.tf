@@ -82,7 +82,8 @@ resource "aws_iam_role_policy" "codebuild" {
           "ec2:DescribeSubnets",
           "ec2:DescribeInternetGateways",
           "ec2:DescribeSecurityGroups",
-          "ec2:DescribeRouteTables"
+          "ec2:DescribeRouteTables",
+          "ec2:DescribeVolumes"
         ]
         Resource = "*"
       },
@@ -106,6 +107,7 @@ resource "aws_iam_role_policy" "codebuild" {
           "s3:ListBucket",
           "s3:GetBucketLocation",
           "s3:GetBucketTagging",
+          "s3:GetBucketPolicy",
           "s3:GetBucketVersioning",
           "s3:GetEncryptionConfiguration",
           "s3:GetBucketPublicAccessBlock"
