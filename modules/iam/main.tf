@@ -72,7 +72,8 @@ resource "aws_iam_role_policy" "codebuild" {
         Effect = "Allow"
         Action = [
           "ec2:DescribeKeyPairs",
-          "ec2:DescribeVpcs"
+          "ec2:DescribeVpcs",
+          "ec2:DescribeVpcAttribute"
         ]
         Resource = "*"
       },
@@ -81,7 +82,8 @@ resource "aws_iam_role_policy" "codebuild" {
       {
         Effect = "Allow"
         Action = [
-          "iam:GetRole"
+          "iam:GetRole",
+          "iam:ListRolePolicies"
         ]
         Resource = "arn:aws:iam::${var.aws_account_id}:role/${var.project_name}-codebuild-role"
       },
