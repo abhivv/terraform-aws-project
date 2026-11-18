@@ -1,3 +1,5 @@
+# CI/CD pipeline test
+
 module "vpc" {
   source = "./modules/vpc"
 
@@ -22,4 +24,39 @@ module "s3" {
 
   project_name = var.project_name
   bucket_name  = var.bucket_name
+}
+
+module "iam" {
+  source = "./modules/iam"
+
+  project_name   = var.project_name
+  aws_region     = var.aws_region
+  aws_account_id = "089603615347"
+}
+
+
+resource "aws_codestarconnections_connection" "github" {
+  name          = "terraform-demo-github"
+  provider_type = "GitHub"
+
+  tags = {
+    Name      = "terraform-demo-github"
+    ManagedBy = "Terraform"
+  }
+}
+
+module "codebuild" {
+  source = "./modules/codebuild"
+
+  project_name          = var.project_name
+  service_role_arn      = module.iam.codebuild_role_arn
+  github_connection_arn = aws_codestarconnections_connection.github.arn
+
+  github_repository_url = "https://github.com/abhivv/terraform-aws-project.git"
+
+  allowed_ssh_cidr = var.allowed_ssh_cidr
+
+  depends_on = [
+    aws_iam_role_policy.codebuild_connection
+  ]
 }
