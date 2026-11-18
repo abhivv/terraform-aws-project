@@ -27,6 +27,7 @@ resource "aws_iam_role_policy" "codebuild" {
 
   policy = jsonencode({
     Version = "2012-10-17"
+
     Statement = [
       # CloudWatch Logs
       {
@@ -72,6 +73,7 @@ resource "aws_iam_role_policy" "codebuild" {
         Effect = "Allow"
         Action = [
           "ec2:DescribeInstances",
+          "ec2:DescribeInstanceTypes",
           "ec2:DescribeKeyPairs",
           "ec2:DescribeVpcs",
           "ec2:DescribeVpcAttribute",
@@ -113,6 +115,15 @@ resource "aws_iam_role_policy" "codebuild" {
           "codeconnections:ListTagsForResource"
         ]
         Resource = "arn:aws:codestar-connections:${var.aws_region}:${var.aws_account_id}:connection/7548af9c-61d8-4078-bbbe-e029a5cee6f4"
+      },
+
+      # CodeBuild read permission
+      {
+        Effect = "Allow"
+        Action = [
+          "codebuild:BatchGetProjects"
+        ]
+        Resource = "arn:aws:codebuild:${var.aws_region}:${var.aws_account_id}:project/${var.project_name}-terraform-ci"
       }
     ]
   })
