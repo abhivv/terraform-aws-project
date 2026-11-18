@@ -40,3 +40,25 @@ output "ec2_public_dns" {
   description = "EC2 public DNS"
   value       = module.ec2.public_dns
 }
+
+output "codebuild_role_arn" {
+  value = module.iam.codebuild_role_arn
+}
+
+output "codebuild_role_name" {
+  value = module.iam.codebuild_role_name
+}
+
+
+output "github_connection_arn" {
+  description = "GitHub connection ARN"
+  value       = aws_codestarconnections_connection.github.arn
+}
+
+output "codebuild_project_name" {
+  value = module.codebuild.project_name
+}
+
+output "codebuild_project_arn" {
+  value = module.codebuild.project_arn
+}
