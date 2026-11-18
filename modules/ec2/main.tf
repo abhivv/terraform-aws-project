@@ -1,6 +1,6 @@
 resource "aws_key_pair" "main" {
   key_name   = "${var.project_name}-key"
-  public_key = file("${path.root}/keys/terraform-demo-key.pub")
+  public_key = var.public_key
 
   tags = {
     Name = "${var.project_name}-key"

@@ -16,8 +16,8 @@ resource "aws_codebuild_project" "main" {
     image_pull_credentials_type = "CODEBUILD"
 
     environment_variable {
-      name  = "TF_VAR_allowed_ssh_cidr"
-      value = var.allowed_ssh_cidr
+      name  = "TF_VAR_public_key"
+      value = var.public_key
       type  = "PLAINTEXT"
     }
   }
@@ -56,3 +56,5 @@ resource "aws_codebuild_webhook" "main" {
     }
   }
 }
+
+

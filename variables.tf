@@ -39,3 +39,9 @@ variable "bucket_name" {
   type        = string
   default     = "terraform-demo-app-089603615347"
 }
+
+variable "public_key" {
+  description = "SSH public key for EC2 access"
+  type        = string
+  sensitive   = true
+}

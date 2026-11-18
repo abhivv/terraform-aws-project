@@ -18,3 +18,8 @@ variable "github_repository_url" {
 variable "allowed_ssh_cidr" {
   type = string
 }
+
+variable "public_key" {
+  description = "SSH public key for EC2 access"
+  type        = string
+}

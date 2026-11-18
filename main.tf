@@ -17,6 +17,7 @@ module "ec2" {
   instance_type     = var.instance_type
   subnet_id         = module.vpc.subnet_id
   security_group_id = module.vpc.security_group_id
+  public_key        = var.public_key
 }
 
 module "s3" {
@@ -51,11 +52,9 @@ module "codebuild" {
   project_name          = var.project_name
   service_role_arn      = module.iam.codebuild_role_arn
   github_connection_arn = aws_codestarconnections_connection.github.arn
-
+  public_key            = var.public_key
   github_repository_url = "https://github.com/abhivv/terraform-aws-project.git"
-
-  allowed_ssh_cidr = var.allowed_ssh_cidr
-
+  allowed_ssh_cidr      = var.allowed_ssh_cidr
   depends_on = [
     aws_iam_role_policy.codebuild_connection
   ]
