@@ -107,6 +107,7 @@ resource "aws_iam_role_policy" "codebuild" {
         Action = [
           "s3:ListBucket",
           "s3:GetBucketAcl",
+          "s3:GetBucketCORS",
           "s3:GetBucketLocation",
           "s3:GetBucketTagging",
           "s3:GetBucketPolicy",
