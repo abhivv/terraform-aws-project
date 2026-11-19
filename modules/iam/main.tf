@@ -106,6 +106,7 @@ resource "aws_iam_role_policy" "codebuild" {
         Effect = "Allow"
         Action = [
           "s3:ListBucket",
+          "s3:GetAccelerateConfiguration",
           "s3:GetBucketAcl",
           "s3:GetBucketCORS",
           "s3:GetBucketLocation",
