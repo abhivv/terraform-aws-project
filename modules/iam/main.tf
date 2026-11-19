@@ -112,6 +112,7 @@ resource "aws_iam_role_policy" "codebuild" {
           "s3:GetBucketTagging",
           "s3:GetBucketPolicy",
           "s3:GetBucketVersioning",
+          "s3:GetBucketWebsite",
           "s3:GetEncryptionConfiguration",
           "s3:GetBucketPublicAccessBlock"
         ]
