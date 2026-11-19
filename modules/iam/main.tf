@@ -101,24 +101,30 @@ resource "aws_iam_role_policy" "codebuild" {
         Resource = "arn:aws:iam::${var.aws_account_id}:role/${var.project_name}-codebuild-role"
       },
 
-      # S3 application bucket read permissions
+
+      # S3 application bucket permissions
       {
         Effect = "Allow"
         Action = [
+          # Create bucket
+          "s3:CreateBucket",
+
+          # Configure bucket
+          "s3:PutBucketTagging",
+          "s3:PutBucketVersioning",
+          "s3:PutEncryptionConfiguration",
+          "s3:PutBucketPublicAccessBlock",
+
+          # Read bucket configuration for Terraform refresh
+          "s3:Get*",
           "s3:ListBucket",
-          "s3:GetAccelerateConfiguration",
-          "s3:GetBucketAcl",
-          "s3:GetBucketCORS",
-          "s3:GetBucketLocation",
-          "s3:GetBucketTagging",
-          "s3:GetBucketPolicy",
-          "s3:GetBucketVersioning",
-          "s3:GetBucketWebsite",
-          "s3:GetEncryptionConfiguration",
-          "s3:GetBucketPublicAccessBlock"
+
+          # Destroy bucket
+          "s3:DeleteBucket"
         ]
         Resource = "arn:aws:s3:::${var.project_name}-app-${var.aws_account_id}"
       },
+
 
       # CodeConnections read permission
       {
