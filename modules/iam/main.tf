@@ -76,6 +76,7 @@ resource "aws_iam_role_policy" "codebuild" {
           "ec2:DescribeInstanceTypes",
           "ec2:DescribeTags",
           "ec2:DescribeInstanceAttribute",
+          "ec2:DescribeInstanceCreditSpecifications",
           "ec2:DescribeKeyPairs",
           "ec2:DescribeVpcs",
           "ec2:DescribeVpcAttribute",
@@ -105,6 +106,7 @@ resource "aws_iam_role_policy" "codebuild" {
         Effect = "Allow"
         Action = [
           "s3:ListBucket",
+          "s3:GetBucketAcl",
           "s3:GetBucketLocation",
           "s3:GetBucketTagging",
           "s3:GetBucketPolicy",
